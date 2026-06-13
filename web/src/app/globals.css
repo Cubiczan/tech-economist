@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --te-bg: #0c0f14;
+  --te-surface: #141a22;
+  --te-surface-2: #1a222d;
+  --te-border: #2a3444;
+  --te-text: #e8edf4;
+  --te-muted: #8b9bb4;
+  --te-accent: #3d8bfd;
+  --te-accent-dim: #2563c4;
+  --te-green: #34d399;
+  --te-green-dim: #065f46;
+  --te-amber: #fbbf24;
+  --te-red: #f87171;
+  --te-red-dim: #7f1d1d;
+}
+
+body {
+  background: var(--te-bg);
+  color: var(--te-text);
+  font-family: system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--te-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--te-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--te-muted);
+}
+
+/* Recharts overrides */
+.recharts-default-tooltip {
+  background: var(--te-surface-2) !important;
+  border: 1px solid var(--te-border) !important;
+  border-radius: 8px !important;
+  color: var(--te-text) !important;
+}
+.recharts-tooltip-label {
+  color: var(--te-muted) !important;
+}

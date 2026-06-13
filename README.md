@@ -28,17 +28,20 @@ Benchmarks and principles synthesized from:
 ## Architecture
 
 ```
-┌─────────────────────┐     ┌──────────────────────────────┐
-│  React Dashboard    │────▶│  FastAPI Backend (Python)    │
-│  (Vite + Recharts)  │     │  ├── tokencost integration   │
-└─────────────────────┘     │  ├── ROI analytics engine    │
-                            │  └── SQLite (longitudinal)   │
-                            └──────────────────────────────┘
+┌──────────────────────────────────────┐     ┌──────────────────────────────┐
+│  Next.js Dashboard (port 3000)       │     │  FastAPI Backend (port 8000) │
+│  ├── Overview (KPIs, charts, EPS)    │────▶│  ├── tokencost integration   │
+│  ├── Workflows (unit economics)      │     │  ├── ROI analytics engine    │
+│  ├── Benchmarks (industry data)      │     │  └── SQLite (longitudinal)   │
+│  ├── Scenario (ROI modeler)          │     └──────────────────────────────┘
+│  ├── AI Advisor (z-ai-web-dev-sdk)   │
+│  └── API proxy → FastAPI             │
+└──────────────────────────────────────┘
 ```
 
 ## Quick Start
 
-### 1. Backend
+### 1. Backend (unchanged)
 
 ```bash
 cd tech-economist/backend
@@ -50,7 +53,26 @@ uvicorn app.main:app --reload --port 8000
 
 On first start, the API seeds 8 demo workflows with 6 months of instrumented usage data.
 
-### 2. Frontend
+### 2. Next.js Dashboard (recommended)
+
+The root project directory (`/`) is a Next.js 16 app that serves the Tech Economist dashboard. It proxies all API calls to the FastAPI backend.
+
+```bash
+# From the project root
+bun install
+bun run dev
+```
+
+The Next.js app includes:
+- **Overview** — KPIs, Spend vs Value charts, EPS shareholder lens, spend forecast
+- **Workflows** — Unit economics table with model routing recommendations
+- **Benchmarks** — Market signals, industry benchmarks, FinOps principles
+- **Scenario** — Interactive ROI modeler with model selector
+- **AI Advisor** — Chat interface with CFO-ready recommendations (powered by z-ai-web-dev-sdk)
+- **Real-time polling** — Dashboard and workflows auto-refresh every 30 seconds
+- **Model routing engine** — API endpoint that recommends cheaper models for underwater workflows
+
+### 3. Legacy Frontend (Vite SPA)
 
 ```bash
 cd tech-economist/frontend
@@ -59,6 +81,8 @@ npm run dev
 ```
 
 Open http://localhost:5173
+
+> **Note:** The Vite frontend is the original implementation. The Next.js dashboard is the recommended approach going forward, adding AI advisor, model routing, and real-time polling.
 
 ## API Endpoints
 
