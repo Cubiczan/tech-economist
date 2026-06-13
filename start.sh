@@ -15,8 +15,8 @@ fi
 uvicorn app.main:app --reload --port 8000 &
 BACKEND_PID=$!
 
-echo "Starting Tech Economist frontend..."
-cd "$ROOT/frontend"
+echo "Starting Tech Economist dashboard (Next.js)..."
+cd "$ROOT/web"
 if [ ! -d node_modules ]; then
   npm install
 fi
@@ -25,7 +25,7 @@ FRONTEND_PID=$!
 
 echo ""
 echo "Tech Economist running:"
-echo "  Dashboard: http://localhost:5173"
+echo "  Dashboard: http://localhost:3000"
 echo "  API docs:    http://localhost:8000/docs"
 echo ""
 echo "Press Ctrl+C to stop."

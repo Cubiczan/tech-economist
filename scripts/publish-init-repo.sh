@@ -30,9 +30,6 @@ if [[ -n "${parent_toplevel}" && "${parent_toplevel}" != "${SOURCE_ROOT}" ]]; th
     --exclude ".git" \
     --exclude "backend/.venv" \
     --exclude "backend/data" \
-    --exclude "frontend/node_modules" \
-    --exclude "frontend/dist" \
-    --exclude "frontend/*.tsbuildinfo" \
     "${SOURCE_ROOT}/" "${PUBLISH_ROOT}/"
   ROOT="${PUBLISH_ROOT}"
 else
