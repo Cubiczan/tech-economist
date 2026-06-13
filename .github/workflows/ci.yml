@@ -1,0 +1,57 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Compile-check all Python (catches syntax + bad imports)
+        run: |
+          python - <<'PYEOF'
+          import compileall, sys
+          ok = compileall.compile_dir('app', quiet=1, force=True)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Type-check
+        run: npx tsc --noEmit
+      - name: Build (catches missing deps, bad config, API misuse)
+        run: npm run build
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Type-check
+        run: npx tsc --noEmit
+      - name: Build
+        run: npm run build

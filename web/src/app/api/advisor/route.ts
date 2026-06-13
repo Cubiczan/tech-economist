@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     const userMessage = `Context data:\n${JSON.stringify({ ...dashboardContext, ...context }, null, 2)}\n\nQuestion: ${question}`;
 
-    const zai = new ZAI();
+    const zai = await ZAI.create();
     const completion = await zai.chat.completions.create({
       model: 'gpt-4o',
       messages: [

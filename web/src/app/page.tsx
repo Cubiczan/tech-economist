@@ -190,7 +190,7 @@ export default function OverviewPage() {
                 <YAxis tick={{ fill: 'var(--te-muted)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={fmtUsd} />
                 <Tooltip
                   contentStyle={{ background: 'var(--te-surface-2)', border: '1px solid var(--te-border)', borderRadius: 8, color: 'var(--te-text)' }}
-                  formatter={(v: number) => fmtUsd(v)}
+                  formatter={(v) => fmtUsd(Number(v))}
                 />
                 <Area type="monotone" dataKey="spend_usd" name="Spend" stroke="#3d8bfd" fill="#3d8bfd" fillOpacity={0.15} strokeWidth={2} />
                 <Area type="monotone" dataKey="value_lift_usd" name="Value Lift" stroke="#34d399" fill="#34d399" fillOpacity={0.15} strokeWidth={2} />
@@ -211,7 +211,7 @@ export default function OverviewPage() {
                 <YAxis tick={{ fill: 'var(--te-muted)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={fmtRoi} />
                 <Tooltip
                   contentStyle={{ background: 'var(--te-surface-2)', border: '1px solid var(--te-border)', borderRadius: 8, color: 'var(--te-text)' }}
-                  formatter={(v: number) => fmtRoi(v)}
+                  formatter={(v) => fmtRoi(Number(v))}
                 />
                 <Line type="monotone" dataKey="roi_multiple" name="ROI" stroke="#34d399" strokeWidth={2} dot={{ r: 3, fill: '#34d399' }} />
               </LineChart>
@@ -232,7 +232,7 @@ export default function OverviewPage() {
               <YAxis tick={{ fill: 'var(--te-muted)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={fmtUsd} />
               <Tooltip
                 contentStyle={{ background: 'var(--te-surface-2)', border: '1px solid var(--te-border)', borderRadius: 8, color: 'var(--te-text)' }}
-                formatter={(v: number) => fmtUsd(v)}
+                formatter={(v) => fmtUsd(Number(v))}
               />
               <Area type="monotone" dataKey="high_usd" name="Upper Bound" stroke="transparent" fill="var(--te-accent)" fillOpacity={0.08} />
               <Area type="monotone" dataKey="low_usd" name="Lower Bound" stroke="transparent" fill="var(--te-bg)" fillOpacity={0.9} />
