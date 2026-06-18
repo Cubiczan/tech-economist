@@ -118,3 +118,62 @@ SQLite database at `backend/data/tech_economist.db`:
 ## License
 
 MIT
+
+## Airbyte Integration
+
+tech-economist supports replacing hardcoded industry benchmarks and market signals with live data managed through [Airbyte](https://airbyte.com). This lets non-developers maintain benchmarks in Airtable or Google Sheets without code changes.
+
+### How it works
+
+The `backend/app/services/airbyte_sync.py` module implements an **Airbyte-first** strategy:
+
+1. **Airbyte SDK is optional** — if not installed or not configured, the app silently falls back to the hardcoded data in `benchmarks.py`.
+2. When `AIRBYTE_CLIENT_ID` and `AIRBYTE_CLIENT_SECRET` are set, the hybrid getters (`get_benchmarks()`, `get_market_signals()`) attempt to pull live data from configured connectors.
+3. **Airtable** is tried first (if `AIRTABLE_BASE_ID` is set), then **Google Sheets** (if `BENCHMARKS_SHEET_ID` is set).
+4. If a connector call fails, the fallback kicks in automatically.
+
+### Setup
+
+```bash
+# Install the Airbyte SDK (optional — app works without it)
+pip install airbyte-agent-sdk
+
+# Configure credentials
+cp .env.example .env
+# Edit .env with your Airbyte client ID/secret and source IDs
+```
+
+### Data source schema
+
+**Airtable — Benchmarks table:**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| name | text | Workflow name |
+| category | text | Marketing, Engineering, Operations, etc. |
+| median_cost_usd | number | Median cost per run in USD |
+| median_roi | number | Median ROI multiplier |
+| source | text | Data attribution |
+| insight | text | Key takeaway |
+
+**Airtable — MarketSignals table:**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| key | text | Signal identifier (e.g. `token_price_decline_yoy_pct`) |
+| value | text/number | Signal value |
+
+### MCP server access
+
+Airbyte provides an MCP server for AI agent queries. Add it to your agent:
+
+```bash
+# Claude Code
+claude mcp add --transport http airbyte-agent https://mcp.airbyte.ai/mcp
+```
+
+### Recommended connectors
+
+- **Airtable** — live benchmark and market signal management
+- **Google Drive** — spreadsheet-based benchmark data
+- **Slack** — cost alert notifications
