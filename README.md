@@ -115,6 +115,49 @@ SQLite database at `backend/data/tech_economist.db`:
 - `monthly_snapshots` — aggregated longitudinal metrics
 - `enterprise_config` — EPS, shares, tech portfolio for shareholder modeling
 
+## MAPS Integration
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Built%20with-MAPS%20%7C%20Multi-Agent%20Pipeline%20Skills-blue" alt="MAPS" />
+</p>
+
+Tech Economist's AI-powered token economics platform leverages the [MAPS framework](https://mojoaistudio.com/maps/) (Multi-Agent Pipeline Skills) for structured analytics agent development.
+
+### APS Layer (Per-Agent Pipeline) — Phase Mapping
+
+| MAPS Phase | Tech Economist Component |
+|------------|-------------------------|
+| **A0 Alignment** | AI token economics for CFOs — cost-per-successful-task, ROI tracking, EPS modeling |
+| **A1 Define** | Analytics agent brief — benchmark coverage, model pricing, workflow economics |
+| **A2 Design** | tokencost integration, ROI analytics engine, longitudinal SQLite tracking |
+| **A3 Build** | FastAPI backend + Next.js dashboard with 6 tab views |
+| **A4 Equip** | tokencost pricing (400+ models), industry benchmark data, EPS modeling tools |
+| **A5 Evaluate** | Model routing recommendations — identify cheaper models for underwater workflows |
+| **A6 Deploy** | FastAPI + Next.js deployment with real-time polling |
+| **A7 Observe** | Usage event tracking, longitudinal trend analysis, 6-month forecasting |
+| **A8 Improve** | Budget governance refinement, model routing optimization from cost signals |
+
+### Key MAPS Concepts Applied
+
+| Concept | Tech Economist Implementation |
+|---------|-------------------------------|
+| **Capability Map (A4)** | tokencost pricing engine, ROI analytics, benchmark databases, EPS modeling |
+| **Evaluation (A5)** | ROI scoring, model routing engine, cost-per-successful-task metrics |
+| **Observation (A7)** | Longitudinal snapshots, monthly trend tracking, spend forecasting |
+| **Improvement (A8)** | Workflow-specific model routing recommendations from cost/performance data |
+
+### Recommended MAPS Skills
+
+| Skill | Use Case |
+|-------|----------|
+| `/foundation` | M0 preflight — token economics domain, CFO audience, data sources |
+| `/build-agent++` | TDD-driven development for new analytics capabilities |
+| `/evaluate-agent++` | Evaluation suite for ROI accuracy and benchmark quality |
+| `/observe-agent` | Longitudinal tracking dashboard for cost/performance trends |
+| `/improve-agent` | Improvement backlog from workflow cost optimization signals |
+
+---
+
 ## License
 
 MIT
