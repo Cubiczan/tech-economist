@@ -1,0 +1,29 @@
+[project]
+name = "tech-economist-backend"
+version = "0.1.0"
+description = "AI token economics: cost estimation, ROI scenarios, and FinOps benchmarks for CFOs"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "sqlalchemy>=2.0.36",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "tokencost>=0.1.18",
+    "python-dateutil>=2.9.0",
+    "airbyte-agent-sdk>=0.1.0",
+    "mcp>=1.2",
+]
+
+[project.scripts]
+tech-economist-mcp = "app.mcp_server:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.8"]
+
+[tool.setuptools]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

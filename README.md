@@ -220,3 +220,61 @@ claude mcp add --transport http airbyte-agent https://mcp.airbyte.ai/mcp
 - **Airtable** — live benchmark and market signal management
 - **Google Drive** — spreadsheet-based benchmark data
 - **Slack** — cost alert notifications
+
+## MCP Server
+
+Tech Economist's deterministic calculators are exposed as an
+[MCP](https://modelcontextprotocol.io) server so any MCP-compatible client
+(Claude Desktop, Cursor, agents, skills) can estimate token cost, model
+workflow ROI, and consult the built-in benchmarks. It is a thin wrapper — all
+logic lives in `backend/app/services` and is reused verbatim. Only the pure,
+offline calculators are exposed; the database-backed analytics (dashboard,
+workflow economics, forecasts) stay in the FastAPI app because they need a live
+SQLAlchemy session.
+
+### Run it
+
+```bash
+# From a published package (once on PyPI):
+uvx --from tech-economist-backend tech-economist-mcp
+
+# From a checkout (run from backend/ so the app package is importable):
+cd backend
+uv run tech-economist-mcp
+# or
+python -m app.mcp_server
+```
+
+The server speaks **stdio**. Example Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "tech-economist": {
+      "command": "uvx",
+      "args": ["--from", "tech-economist-backend", "tech-economist-mcp"]
+    }
+  }
+}
+```
+
+### Tools
+
+| Tool | Description |
+|---|---|
+| `estimate_token_cost` | Per-call LLM cost: token counts, USD cost, blended $/1M tokens (tokencost with offline fallback) |
+| `roi_scenario` | Annual ROI of an agentic workflow: cost/value/net, ROI multiple, payback, recommendation |
+| `industry_benchmarks` | Built-in benchmark workflows (Deloitte, Bain, FinOps Foundation, Digital Applied) |
+| `finops_principles` | Built-in FinOps principles for AI token spend |
+| `market_signals` | Current AI-token market signals (price decline, consumption growth, cache savings, etc.) |
+
+Run the MCP tests with `cd backend && uv run pytest tests/test_mcp_server.py`.
+
+### Publishing
+
+Follows the same path proven by
+[codesentinel](https://github.com/Cubiczan/codesentinel) and
+[codehealth-mcp](https://github.com/Cubiczan/codehealth-mcp): namespace
+`io.github.Cubiczan` (see `server.json`), stdio transport, published to the
+[MCP Registry](https://github.com/modelcontextprotocol/registry) with the
+`mcp-publisher` CLI (not via PRs).
